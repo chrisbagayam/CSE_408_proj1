@@ -4,6 +4,7 @@ Created on Mon Feb  1 17:14:55 2021
 
 @author: Lwax Malax
 """
+import buildVoc
 import nltk
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -17,6 +18,8 @@ def feat_vec(filepath,voc):
     frequency = 0
     # the one-dimensional feature vector 
     feat_vec = []
+    # getting the vocabulary array
+    voc = buildVoc.buildVoc()
     # Open the file with read only permit
     f = open(filepath,'r')
     # use readline() to read the first line 
