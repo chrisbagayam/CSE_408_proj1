@@ -25,10 +25,6 @@ def feat_vec(filepath,voc):
     frequency = 0
     # the one-dimensional feature vector 
     feat_vec = []
-    
-    
-    #folder = "C:/Users/Lwax Malax/OneDrive - Arizona State University/Year 5 - Spring/CSE 408/Projects/Project 1/Data/KNN/testing/pos" # enter path to folder you want ot get vocabulary of 
-    #vocabulary = buildVoc.buildVoc(folder, [])
     # Open the file with read only permit
     f = open(filepath,'r')
     # use readline() to read the first line 
