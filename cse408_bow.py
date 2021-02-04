@@ -10,6 +10,13 @@ nltk.download('stopwords')
 nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 
+# getting the vocabulary
+folder = "../Data/kNN/training/pos"
+voc = buildVoc.buildVoc(folder,[])
+#print(len(voc))
+
+#getting the file
+filepath = "../Data/kNN/training/pos/cv000_29590.txt"
 # function to return text as an array
 def feat_vec(filepath,voc):
     # initial array of the text file given in the path
@@ -18,8 +25,10 @@ def feat_vec(filepath,voc):
     frequency = 0
     # the one-dimensional feature vector 
     feat_vec = []
-    # getting the vocabulary array
-    voc = buildVoc.buildVoc()
+    
+    
+    #folder = "C:/Users/Lwax Malax/OneDrive - Arizona State University/Year 5 - Spring/CSE 408/Projects/Project 1/Data/KNN/testing/pos" # enter path to folder you want ot get vocabulary of 
+    #vocabulary = buildVoc.buildVoc(folder, [])
     # Open the file with read only permit
     f = open(filepath,'r')
     # use readline() to read the first line 
@@ -42,8 +51,7 @@ def feat_vec(filepath,voc):
     for word in voc: 
         frequency = text_tokens.count(word)
         feat_vec.append(frequency)
-    #print(feat_vec)
-    return feat_vec
-
-
-
+    print(feat_vec)
+    #print(len(feat_vec))
+    #return feat_vec
+feat_vec(filepath, voc)
