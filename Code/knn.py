@@ -175,15 +175,15 @@ y_test = test_df.pos
 # print(X_test)
 ## Necessary imports for the classifier.
 from sklearn.neighbors import KNeighborsClassifier
-## Instantiate the model with 5 neighbors.
 max_accuracy = 0
 max_k=0
 for k in range(1,25): 
     knn = KNeighborsClassifier(n_neighbors=k)
-    ## Fit the model on the training data.
+    # Fit the model on the training data.
     knn.fit(X_train, y_train)
-    ## See how the model performs on the test data.
+    # Inspect how the model perform on test data
     score = knn.score(X_test, y_test)
+    
     if(score > max_accuracy):
         max_accuracy = score
         max_k = k
