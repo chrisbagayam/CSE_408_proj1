@@ -63,6 +63,12 @@ for i in no_stop_word_arr:
             set_of_unique_words[word] = set_of_unique_words.get(word)+1
         else:
             set_of_unique_words[word] = 1
+    
+    #Removing low frequency words
+    for key in list(set_of_unique_words):
+        if(set_of_unique_words[key] <2):
+            set_of_unique_words.pop(key)
+
     set_of_unique_words["pos"] = 1
     bag_of_word.append(set_of_unique_words)
     set_of_unique_words = {}
@@ -83,6 +89,12 @@ for i in neg_no_stop_word_arr:
             set_of_unique_words[word] = set_of_unique_words.get(word)+1
         else:
             set_of_unique_words[word] = 1
+    
+    #Removing low frequency words
+    for key in list(set_of_unique_words):
+        if(set_of_unique_words[key] <2):
+            set_of_unique_words.pop(key)
+
     set_of_unique_words["pos"] = 0
     bag_of_word.append(set_of_unique_words)
     set_of_unique_words = {}
@@ -104,7 +116,16 @@ for i in test_no_stop_word_arr:
             set_of_unique_words[word] = set_of_unique_words.get(word)+1
         else:
             set_of_unique_words[word] = 1
+    
+
+    #removing low frequency words
+    for key in list(set_of_unique_words):
+        if(set_of_unique_words[key] <2):
+            set_of_unique_words.pop(key)
+    
+
     set_of_unique_words["pos"] = 1
+
     test_bag_of_word.append(set_of_unique_words)
     set_of_unique_words = {}
 # print(len(test_bag_of_word))
@@ -123,21 +144,20 @@ for i in test_neg_no_stop_word_arr:
             set_of_unique_words[word] = set_of_unique_words.get(word)+1
         else:
             set_of_unique_words[word] = 1
+    
+    
+    #Removing low frequency words
+    for key in list(set_of_unique_words):
+        if(set_of_unique_words[key] <2):
+            set_of_unique_words.pop(key)
+
+    
     set_of_unique_words["pos"] = 0
+
     test_bag_of_word.append(set_of_unique_words)
     set_of_unique_words = {}
 
-
-# dummy = []
-# for i in range():
-#     dummy.append(i)
-# # test_bag_of_word.append(dummy)
-# print(len(test_bag_of_word))
-
-
-
-    # //////////////////////////////////////////////////////////
-
+# ///////////////////////////////////////////////////////////////////////////////
 
 #Create a dataFrame for the test set ready to be used in the KNN model
 df = pd.DataFrame(bag_of_word).fillna(0)
@@ -149,6 +169,8 @@ test_scaled_data = scaler1.fit_transform(test_df)
 df = pd.DataFrame(scaled_data,index=df.index,columns=df.columns)
 test_df = pd.DataFrame(test_scaled_data,index=test_df.index,columns=test_df.columns)
 
+print(df.shape)
+print(test_df.shape)
 #Reshaping test df
 missing_columns = [x for x in df.columns if x not in test_df.columns]
 
@@ -157,10 +179,8 @@ for i in missing_columns:
         test_df[i]=0
     else:
         break
-# print(len(test_df))
 
 # Constructing the KNN Module
-
 #Separating x and y axis for training
 X_train = df.drop(["pos"], axis=1)
 y_train = df.pos
@@ -187,4 +207,5 @@ for k in range(1,25):
     if(score > max_accuracy):
         max_accuracy = score
         max_k = k
+
 print(max_accuracy * 100 , "% when k=", max_k )    
