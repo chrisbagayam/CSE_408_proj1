@@ -5,18 +5,6 @@ import string
 
 import os
 
-
-def main():
-    absolute_path = os.path.abspath('Data/SA/neg')
-
-    for filename in os.listdir(absolute_path):
-            print (filename)#+ "\t"+ str(sentimentAnalysis(absolute_path + "/"+ filename)))
-    absolute_path = os.path.abspath('Data/SA/pos')
-
-    for filename in os.listdir(absolute_path):
-            print (filename)#+ "\t"+ str(sentimentAnalysis(absolute_path + "/"+ filename)))
-
-
 def sentimentAnalysis(filename):
     path = 'Data/SA/wordWithStrength.txt' #file path will need to be changed
     f = open(path, 'r')
@@ -99,9 +87,3 @@ def remove_words(numbers):
     return new_numbers
 
 #print(remove(numbers))
-
-
-
-
-if __name__ == "__main__":
-    main()
