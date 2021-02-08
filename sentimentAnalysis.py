@@ -1,12 +1,37 @@
+# Sentiment Analysis
+
+from string import digits
+import string
+
+import os
+
+
+def main():
+    absolute_path = os.path.abspath('Data/SA/neg')
+
+    for filename in os.listdir(absolute_path):
+            print (filename)#+ "\t"+ str(sentimentAnalysis(absolute_path + "/"+ filename)))
+    absolute_path = os.path.abspath('Data/SA/pos')
+
+    for filename in os.listdir(absolute_path):
+            print (filename)#+ "\t"+ str(sentimentAnalysis(absolute_path + "/"+ filename)))
 
 
 def sentimentAnalysis(filename):
-    indexs = []
-    scores = []
+    path = 'Data/SA/wordWithStrength.txt' #file path will need to be changed
+    f = open(path, 'r')
+    lexicon = f.read().splitlines()
+    #print(lexicon)
+
+    numbers = lexicon
+
+    indexs = remove_numbers(lexicon)
+    scores = remove_words(numbers)
 
     file = open(filename, 'r')
     txt_set = file.read()
-    get_text_score(txt_set, indexs, scores)
+    return get_text_score(txt_set, indexs, scores)
+
 
 def get_text_score(txt_set, indexs, scores):
     total_score = 0
@@ -26,23 +51,57 @@ def get_text_score(txt_set, indexs, scores):
             continue
         elif char in word_split:
             if word not in stopwords and len(word) > 1:
-                #add scores here
-                score = get_word_score(word, indexs, scores)
-                if score != null:
-                    total_score += score
+                index = get_word_score(word, indexs)
+
+                if index != -1:
+                    total_score += float(scores[index])
 
             word = ""
+
         else:
             word += char
+    return total_score
 
 
 
-def get_word_score(word, indexs, scores):
-    index = indexs.find(word)
-    if index != -1:
-        return scores[index]
+def get_word_score(word, indexs):
+    if word in indexs:
+        return indexs.index(word)
     else:
-        return null
+        return -1
+
+
+
+
+
+# create array with only the words
+def remove_numbers(lexicon):
+    remove_digits = str.maketrans('', '', digits)
+    removeTab = str.maketrans('', '', ".-\t")
+    lexicon = [i.translate(remove_digits) for i in lexicon]
+    lexicon = [i.translate(removeTab) for i in lexicon]
+    return lexicon
+
+#print(remove(lexicon))
+
+#create array with only the sentiment score numbers
+def remove_words(numbers):
+    new_numbers = []
+    place_of_tab = 0
+    for num in numbers:
+        for index in range(len(num)):
+            if num[index] == "\t":
+                place_of_tab = index
+        new_numbers.append(num[place_of_tab+1:len(num)])
+
+
+
+    return new_numbers
+
+#print(remove(numbers))
+
+
+
 
 if __name__ == "__main__":
     main()
